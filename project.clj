@@ -7,4 +7,5 @@
                  [overtone "0.10.1"]
                  [leipzig "0.10.0"]
                  [quil "2.4.0"]
-                 ])
+                 ]
+  :main bossig.core)

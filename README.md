@@ -25,11 +25,14 @@ you can use the supplied PD-patch (midiclock.pd), but this should be opusmodus, 
 Do this befor overtone is booted so the midi device is recognized upon booting overtone
 
 ###start repl
-`lein repl :host 0.0.0.0 :port 7888`
+for now, `lein repl` check port number use that later when making connection from emacs
+<!--`lein repl :host 0.0.0.0 :port 21337`
 
 the `:host 0.0.0.0` is for allowing external connections
 the `:port` is for fixing the port
-
-###
+-->
+###open emacs live
+more specifically first load the bossig.core namespace (codedspace/src/bossig/core.clj) and connect it to the repl
+`C-c M-c` using the correct host (localhost if connecting to your own machine) and port, <!--should be 21337-->
 
 
