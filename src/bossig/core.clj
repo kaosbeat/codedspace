@@ -32,6 +32,8 @@
           (fn [e]
             (let [note (:note e)
                   vel  (:velocity e)]
-               (swap! bbeat inc)
-               (println @bbeat)))
+              (if (and (= note 60) (= vel 64))
+                (swap! bbeat inc)
+                (println " wrongMIDI")
+                )))
                     ::keyboard-handler)
