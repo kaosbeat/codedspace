@@ -30,7 +30,11 @@ for now, `lein repl` check port number use that later when making connection fro
 
 the `:host 0.0.0.0` is for allowing external connections
 the `:port` is for fixing the port
+
 -->
+the bossig.core file is autamagically loaded (because we specified it in the project.clj file)
+
+
 ###open emacs live
 more specifically first load the bossig.core namespace (codedspace/src/bossig/core.clj) and connect it to the repl
 `C-c M-c` using the correct host (localhost if connecting to your own machine) and port, <!--should be 21337-->
