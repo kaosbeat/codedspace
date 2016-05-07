@@ -22,3 +22,6 @@
     )
   )
 (kickA)
+
+(define kickdisto (inst-fx! kickA fx-distortion2))
+(ctl kickdisto (:amount 0.70))
