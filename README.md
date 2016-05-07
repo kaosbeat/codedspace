@@ -14,6 +14,7 @@ emacs live
 overtone
 quil
 leipzig
+<<<<<<< Updated upstream
 
 
 ##setup
@@ -22,7 +23,7 @@ leipzig
 
 ###start midiout app
 you can use the supplied PD-patch (midiclock.pd), but this should be opusmodus, and on the same rhythm as the rest of the instruments.
-Do this befor overtone is booted so the midi device is recognized upon booting overtone
+Do this before Overtone is booted so the midi-device is recognized upon booting Overtone
 
 ###start repl
 for now, `lein repl` check port number use that later when making connection from emacs
@@ -39,4 +40,11 @@ the bossig.core file is autamagically loaded (because we specified it in the pro
 more specifically first load the bossig.core namespace (codedspace/src/bossig/core.clj) and connect it to the repl
 `C-c M-c` using the correct host (localhost if connecting to your own machine) and port, <!--should be 21337-->
 
+## questions 
 
+
+
+
+=======
+rationals or replacement symbols -> 1/8 = e , 1/8. = e.
+>>>>>>> Stashed changes
