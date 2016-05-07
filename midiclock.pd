@@ -1,8 +1,8 @@
-#N canvas 777 215 524 409 10;
+#N canvas 663 142 524 409 10;
 #X obj 51 61 inlet;
 #X obj 106 272 noteout;
 #X floatatom 106 102 0 0 0 0 - - -;
-#X obj 332 97 loadbang;
+#X obj 144 66 loadbang;
 #X obj 106 194 metro;
 #X obj 106 246 makenote;
 #X floatatom 183 150 0 0 0 0 - - -;
@@ -10,17 +10,17 @@
 #X floatatom 139 150 0 0 0 0 - - -;
 #X floatatom 227 150 0 0 0 0 - - -;
 #X floatatom 270 150 0 0 0 0 - - -;
-#X msg 332 132 500;
-#X msg 364 132 60;
-#X msg 393 132 64;
-#X msg 421 132 250;
+#X msg 144 101 500;
+#X msg 176 101 60;
+#X msg 205 101 64;
+#X msg 233 101 250;
 #X text 138 129 rate;
 #X text 181 129 pitch;
 #X text 226 129 vel;
 #X text 262 130 length;
 #X obj 240 267 ctlout 1;
 #X floatatom 240 238 0 0 0 0 - - -;
-#X obj 108 37 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 108 37 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X connect 0 0 2 0;
 #X connect 2 0 4 0;

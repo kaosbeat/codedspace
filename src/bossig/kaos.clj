@@ -1,4 +1,5 @@
-(ns bossig.kaos
+(ns bossig.core
+
   (:require [quil.core :as q]
             [quil.middleware :as m]
             [quil.helpers.seqs :refer [seq->stream range-incl cycle-between steps]])
@@ -35,13 +36,17 @@
 (defn draw [state]
                                         ; (kn/drawP state)
   (q/background 25 25 255)
-  (q/rect 25 250 300 300)
+  (q/with-translation [ 100 20 0 ]
+    (q/rect 15 250 300 300)
+    (println (mod16))
+    )
 
                                         ;(q/with-translation [ (+ 100 (* 50 (mod @bbeat 16))) 100 0]
                                         ; (q/box (* (:fm state)  100))
 
                                         ;  (q/box (* 550 @(audio-bus-monitor 0))))
   )
+
 
 
 
