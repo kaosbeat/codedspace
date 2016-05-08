@@ -39,6 +39,10 @@
       (out out-bus (pan2 (* 0.60 amp-env
                           (sin-osc (+ carrier
                                      (* mod-env (* carrier depth) (sin-osc  modulator)))))))))
+;  Chaos  ()
+;  Line   (amp-comp, amp-comp-a, k2a, line )
+;  Random (rand-seed, lonrenz-trig )
+;  Noise  (lf-noise, hasher , mantissa-mask)
 
 
 
@@ -49,6 +53,8 @@
               (fmtones note vel)))
           ::keyboard-handler)
 
+(event-debug-on)
+(event-debug-off)
 
 
 ;; error : Unable to resolve symbol: define in this context ??

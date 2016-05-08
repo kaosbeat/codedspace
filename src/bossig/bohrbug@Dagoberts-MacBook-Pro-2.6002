@@ -1,8 +1,8 @@
-  Show: Clojure Java REPL Tooling Duplicates All  (34 frames hidden)
+  Show: Clojure Java REPL Tooling Duplicates All  (38 frames hidden)
 
 2. Unhandled clojure.lang.Compiler$CompilerException
    Error compiling:
-   /private/var/folders/08/fgql8_7x2cg2lgk6wgpb0h180000gn/T/form-init7852877969506753265.clj:1:1
+   /Users/bohrbug/Documents/codedspace/src/bossig/bohrbug.clj:28:1
 
                  Compiler.java: 6688  clojure.lang.Compiler/analyze
                  Compiler.java: 6625  clojure.lang.Compiler/analyze
@@ -11,6 +11,10 @@
                  Compiler.java: 6669  clojure.lang.Compiler/analyze
                  Compiler.java: 6625  clojure.lang.Compiler/analyze
                  Compiler.java: 6931  clojure.lang.Compiler/eval
+                 Compiler.java: 7379  clojure.lang.Compiler/load
+                          REPL:    1  bossig.core/eval22422
+                          REPL:    1  bossig.core/eval22422
+                 Compiler.java: 6927  clojure.lang.Compiler/eval
                  Compiler.java: 6890  clojure.lang.Compiler/eval
                       core.clj: 3105  clojure.core/eval
                       core.clj: 3101  clojure.core/eval
@@ -50,6 +54,10 @@
                  Compiler.java: 6669  clojure.lang.Compiler/analyze
                  Compiler.java: 6625  clojure.lang.Compiler/analyze
                  Compiler.java: 6931  clojure.lang.Compiler/eval
+                 Compiler.java: 7379  clojure.lang.Compiler/load
+                          REPL:    1  bossig.core/eval22422
+                          REPL:    1  bossig.core/eval22422
+                 Compiler.java: 6927  clojure.lang.Compiler/eval
                  Compiler.java: 6890  clojure.lang.Compiler/eval
                       core.clj: 3105  clojure.core/eval
                       core.clj: 3101  clojure.core/eval
