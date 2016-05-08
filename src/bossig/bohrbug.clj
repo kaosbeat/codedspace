@@ -23,5 +23,32 @@
   )
 (kickA)
 
+;; why is kickA grey ?
+
 (define kickdisto (inst-fx! kickA fx-distortion2))
 (ctl kickdisto (:amount 0.70))
+
+(midi-connected-devices)
+
+(defsynth fmtones [carrier 440 divisor 8.0 depth 8.0 out-bus 0]
+  (let [modulator (/ carrier divisor)
+        mod-env (env-gen (lin-rand -0.2 0.4 -2.8))
+        amp-env (env-gen (lin 0 -0.2 0.1 1 ) :action FREE)
+        filt (glitch-rhpf (+ carrier modulator ) 100 2.6)
+             ]
+      (out out-bus (pan2 (* 0.60 amp-env
+                          (sin-osc (+ carrier
+                                     (* mod-env (* carrier depth) (sin-osc  modulator)))))))))
+
+
+
+(on-event [:midi :note-on]
+          (fn [e]
+            (let [note (:note e)
+                  vel  (:velocity e)]
+              (fmtones note vel)))
+          ::keyboard-handler)
+
+
+
+;; error : Unable to resolve symbol: define in this context ??
