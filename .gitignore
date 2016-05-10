@@ -1,3 +1,9 @@
 target
 
 .nrepl-port
+
+src/bossig/.#kaos.clj
+
+src/bossig/.#core.clj
+
+.lein-repl-history

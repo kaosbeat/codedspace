@@ -6,6 +6,19 @@
   (:import [codeanticode.syphon])
   )
 
+(on-event [:midi :note-on]
+          (fn [e]
+            ( println e)
+            (let [note (:note e)
+                  vel  (:velocity e)
+                  channel (:channel e)]
+              (if (and (= channel 15) (and (= note 60) (= vel 64)))
+                (swap! bbeat inc)
+                (println "really  wrongMIDI")
+                )))
+                    ::keyboard-handler)
+
+
 
 
 (def width 1440)

@@ -3,6 +3,7 @@
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
+;  :repl-options { :host "192.168.1.106"}
   :resource-paths [
                    "Syphon/library/jsyphon.jar"
                    "Syphon/library/libJSyphon.jnilib"

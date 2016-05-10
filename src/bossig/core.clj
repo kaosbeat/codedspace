@@ -34,6 +34,6 @@
                   vel  (:velocity e)]
               (if (and (= note 60) (= vel 64))
                 (swap! bbeat inc)
-                (println " wrongMIDI")
+                (println "really  wrongMIDI")
                 )))
                     ::keyboard-handler)
