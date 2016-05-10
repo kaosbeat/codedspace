@@ -6,6 +6,8 @@
   (:import [codeanticode.syphon])
   )
 
+
+
 (def width 1440)
 (def height 980)
 
@@ -89,21 +91,28 @@
    })
 
 
+
+
 (defn draw [state]
                                         ;(q/text  0 0 10 10 )
 
-  (q/background 25 25 255)
-  (q/fill 0 (get @sd :velocity ) 2)
+  (q/background 25 (* 2 (get @sd :velocity)) 255)
+
   (q/with-translation [(* ( get @ch :pan) 10  )  (* (get  @bd :velocity ) 10) 1 ]
+    (q/fill 230 (get @ch :note ) (* 16 (mod16)))
     (q/rect 15 (* ( mod16) 0) 300 300)
     (println (mod16))
     )
 
-                                        ;(q/with-translation [ (+ 100 (* 50 (mod @bbeat 16))) 100 0]
-                                        ; (q/box (* (:fm state)  100))
+    (q/with-translation [ (+ 100 (* 50 (mod @bbeat 16))) 100 0]
+      (q/fill  (get @sd :velocity ) (* 16 (mod16)) 12 )
+      (q/box (* (get @bd :velocity)  10))
+                                          )
+    (dotimes [n (get @sd :velocity)]
+      (q/line (* 20 n) 400 (* n 100)  1000)
+                                          )
 
-                                        ;  (q/box (* 550 @(audio-bus-monitor 0))))
-  )
+                                        )
 
 
 
