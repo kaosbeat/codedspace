@@ -3,13 +3,18 @@
   (:require [quil.core :as q]
             [quil.middleware :as m]
             [quil.helpers.seqs :refer [seq->stream range-incl cycle-between steps]])
+  (:import [codeanticode.syphon])
   )
+
+
 
 (def width 1440)
 (def height 980)
 
 (defn setup []
-  (q/frame-rate 30))
+  (q/frame-rate 30)
+
+  )
 
 
 
