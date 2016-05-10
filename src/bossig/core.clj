@@ -28,12 +28,19 @@
 (defn mod4 [] (mod @bbeat 4))
 (defn mod2 [] (mod @bbeat 2))
 ; poc code, the beatcount @bbeat is increased on EVERY incoming midi message, this need to be filtered
-(on-event [:midi :note-on]
-          (fn [e]
-            (let [note (:note e)
-                  vel  (:velocity e)]
-              (if (and (= note 60) (= vel 64))
-                (swap! bbeat inc)
-                (println "really  wrongMIDI")
-                )))
-                    ::keyboard-handler)
+
+(def bd (atom {:note 0 :velocity 0}))
+(def sd (atom {:note 0 :velocity 0}))
+(def ch (atom 1))
+(def oh (atom 1))
+(def pc1 (atom 1))
+(def pc2 (atom 1))
+(def ld1 (atom 1))
+(def ld2(atom 1))
+(def ch (atom 1))
+(def pi (atom 1))
+
+
+@bbeat
+
+(mod16)

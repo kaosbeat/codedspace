@@ -6,21 +6,6 @@
   (:import [codeanticode.syphon])
   )
 
-(on-event [:midi :note-on]
-          (fn [e]
-            ( println e)
-            (let [note (:note e)
-                  vel  (:velocity e)
-                  channel (:channel e)]
-              (if (and (= channel 15) (and (= note 60) (= vel 64)))
-                (swap! bbeat inc)
-                (println "really  wrongMIDI")
-                )))
-                    ::keyboard-handler)
-
-
-
-
 (def width 1440)
 (def height 980)
 
@@ -28,6 +13,33 @@
   (q/frame-rate 30)
 
   )
+
+(on-event [:midi :note-on]
+          (fn [e]
+           ; (println e)
+            ;(print (:channel e) )
+            ;(print " ")
+            ;(print (:note e) )
+            ;(print " ")
+            ;(println (:velocity e))
+
+            (let [note (:note e)
+                  vel  (:velocity e)
+                  channel (:channel e)]
+              (if (and (= channel 15) (and (= note 60) (= vel 64)))
+                (swap! bbeat inc)
+                ;(concat (print "note =") (println  note ))
+
+                (if (= channel 0)
+                  (swap! bd assoc :note note :velocity vel)
+                  ;(println (concat (print "stuff = ") (print note)))
+
+                  (if (= channel 1)
+                    (swap! sd assoc :note note)
+                    )))
+
+              ))
+          ::keyboard-handler)
 
 
 
@@ -43,6 +55,7 @@
    ;:fmchordsbus @(audio-bus-monitor 6)
    ;:axobus  @(get-in axotapper [:taps :left])
    ;:kickA (getkick)
+
    ;:snareA (get (get-in @live-pats [snareA]) (mod @bbeat (count (get-in @live-pats [snareA]))))
    ;:c-hat (getchat)
    ;:fmchord (get  (getchords) :carrier)
@@ -52,10 +65,11 @@
 
 
 (defn draw [state]
-                                        ; (kn/drawP state)
+                                        ;(q/text  0 0 10 10 )
+
   (q/background 25 25 255)
-  (q/with-translation [ 100 20 0 ]
-    (q/rect 15 250 300 300)
+  (q/with-translation [ (* (get  @bd :velocity ) 10) 1 1]
+    (q/rect 15 (* ( mod16) 25) 300 300)
     (println (mod16))
     )
 
