@@ -21,7 +21,7 @@
             ;(print " ")
             ;(print (:note e) )
             ;(print " ")
-            ;(println (:velocity e))
+
 
             (let [note (:note e)
                   vel  (:velocity e)
@@ -29,17 +29,31 @@
               (if (and (= channel 15) (and (= note 60) (= vel 64)))
                 (swap! bbeat inc)
                 ;(concat (print "note =") (println  note ))
-
                 (if (= channel 0)
                   (swap! bd assoc :note note :velocity vel)
                   ;(println (concat (print "stuff = ") (print note)))
-
                   (if (= channel 1)
-                    (swap! sd assoc :note note)
-                    )))
+                    (swap! sd assoc :note note :velocity vel)
+                    (if (= channel 2)
+
+                      ))))
 
               ))
           ::keyboard-handler)
+
+(on-event [:midi :control-change]
+          (fn [e]
+            ;(println e)
+            (let [data1 (:data1 e)
+                  data2 (:data2 e)
+                  channel (:channel e)]
+              (if (and  (= channel 2) (= data1 1))
+                (swap! ch assoc :pan data2)
+                )
+              )
+            )
+          ::control-handler
+          )
 
 
 
@@ -48,7 +62,18 @@
   ;(newt/update-particles width height)
   {
                                         ;:fm @(:left fmtonestaps)
-   ;:beat @bbeat
+   :beat @bbeat
+   :bd @bd
+   :sd @sd
+   :ch @ch
+   :oh @oh
+   :pc1 @pc1
+   :pc2 @pc2
+   :ld1 @ld1
+   :ld2 @ld2
+   :chords @chords
+   :keys @keys
+
    ;:drumbus @(audio-bus-monitor 0)
    ;:contrabus @(audio-bus-monitor 2)
    ;:fmtonesbus @(audio-bus-monitor 4)
@@ -68,8 +93,9 @@
                                         ;(q/text  0 0 10 10 )
 
   (q/background 25 25 255)
-  (q/with-translation [ (* (get  @bd :velocity ) 10) 1 1]
-    (q/rect 15 (* ( mod16) 25) 300 300)
+  (q/fill 0 (get @sd :velocity ) 2)
+  (q/with-translation [(* ( get @ch :pan) 10  )  (* (get  @bd :velocity ) 10) 1 ]
+    (q/rect 15 (* ( mod16) 0) 300 300)
     (println (mod16))
     )
 
