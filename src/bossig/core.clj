@@ -2,16 +2,9 @@
   (:use [overtone.live]
         [overtone.inst.piano])
 
-  (:require [quil.core :as q]
-            [quil.middleware :as m]
-            [quil.helpers.seqs :refer [seq->stream range-incl cycle-between steps]])
+
 
   )
-
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
 
 (piano)
 (midi-connected-devices)
@@ -39,8 +32,3 @@
 (def ld2(atom 1))
 (def chords (atom {:note 0 :velocity 0}))
 (def keyz (atom 1))
-
-
-@bbeat
-
-(mod16)

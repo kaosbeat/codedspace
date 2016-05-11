@@ -13,13 +13,13 @@
 (def height 980)
 
 (defn setup []
-  (q/frame-rate 60)
+  (q/frame-rate 30)
   ;;(:sserver (new SyphonServer [(qa/currentapplet), "test" ]) )
   )
 
 (on-event [:midi :note-on]
           (fn [e]
-;            (println e)
+         ;(println e)
             ;(print (:channel e) )
             ;(print " ")
             ;(print (:note e) )
@@ -33,6 +33,7 @@
                 (swap! bbeat inc)
                 ;(concat (print "note =") (println  note ))
                 (if (= channel 0)
+                  ;(println "bd in ta house")
                   (swap! bd assoc :note note :velocity vel)
                   ;(println (concat (print "stuff = ") (print note)))
                   (if (= channel 1)
@@ -42,8 +43,12 @@
                       ))))
 
               ))
-          :keyboard-handler)
-(remove-event-handler :keyboard-handler)
+          ::keyboard-handler)
+;;(remove-event-handler :keyboard-handler)
+
+(println @bd)
+@bd
+
 (on-event [:midi :control-change]
           (fn [e]
             ;(println e)
@@ -58,14 +63,10 @@
           ::control-handler
           )
 
-(defn update [state
-              ])
+;(defn update [state            ])
 
 (defn update [state]
-  ;(newt/add-new-particles)
-  ;(newt/update-particles width height)
-  {
-                                        ;:fm @(:left fmtonestaps)
+    {
    :beat @bbeat
    :bd @bd
    :sd @sd
@@ -94,19 +95,20 @@
 
 
 (defn draw [state]
+  (q/background 25 (* 2 (get @sd :velocity)) 255)
   )
 
 (defn draw [state]
-                                        ;(q/text  0 0 10 10 )
 
-  ;;(q/background 25 (* 2 (get @sd :velocity)) 255)
+
+  (q/background 25 (* 2 (get @sd :velocity)) 255)
 
 
 ;;
   (q/with-translation [(* ( get @ch :pan) 10  )  (* (get  @bd :velocity ) 10) 1 ]
-    (q/fill 230 (get @ch :note ) (* 16 (mod16)))
-    (q/rect 15 (* ( mod16) 0) 300 300)
-    (println (mod16))
+    ;(q/fill 230 (get @ch :note ) (* 16 (mod16)))
+    ;(q/rect 15 (* ( mod16) 0) 300 300)
+    ;(println (mod16))
     )
 
 
@@ -114,10 +116,10 @@
 
     (q/with-translation [ (+ 100 (* 50 (mod @bbeat 16))) 100 0]
       (q/fill  (get @sd :velocity ) (* 16 (mod16)) 12 )
-      (q/box (* (get @bd :velocity)  10))
+     ; (q/box (* (get @bd :velocity)  10))
       ))
   (dotimes [n (get @sd :velocity)]
-    (q/line (* 20 n) 400 (* n 100)  1000)
+    (q/line (* 20 n) 400 (* n 100)  10)
     )
 
 
@@ -127,11 +129,13 @@
 
 
 (q/defsketch halic
-  :title "halic";;  :size :fullscreen
+  :title "halic"
+  ;;  :size :fullscreen
   :size [width height]
   :features [:present]
   :setup setup
   :update update
   :draw draw
   :renderer :p3d
-  :middleware [m/fun-mode])
+  :middleware [m/fun-mode]
+  )
