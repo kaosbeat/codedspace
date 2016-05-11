@@ -3,8 +3,8 @@
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-;  :repl-options { :host "192.168.1.106"}
-  :resource-paths [
+  :repl-options {:host "0.0.0.0" :port 21337}
+	:resource-paths [
                    "Syphon/library/jsyphon.jar"
                    "Syphon/library/libJSyphon.jnilib"
                    "Syphon/library/Syphon.framework"
@@ -15,4 +15,4 @@
                  [leipzig "0.10.0"]
                  [quil "2.3.0"]
                  ]
-  :main bossig.core)
+:main bossig.core)
