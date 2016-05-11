@@ -31,14 +31,14 @@
 
 (def bd (atom {:note 0 :velocity 0}))
 (def sd (atom {:note 0 :velocity 0}))
-(def ch (atom 1))
+(def ch (atom {:note 0 :velocity 0 :pan 0}))
 (def oh (atom 1))
 (def pc1 (atom 1))
 (def pc2 (atom 1))
 (def ld1 (atom 1))
 (def ld2(atom 1))
-(def ch (atom 1))
-(def pi (atom 1))
+(def chords (atom {:note 0 :velocity 0}))
+(def keyz (atom 1))
 
 
 @bbeat

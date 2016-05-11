@@ -2,8 +2,9 @@
 
   (:require [quil.core :as q]
             [quil.middleware :as m]
-            [quil.helpers.seqs :refer [seq->stream range-incl cycle-between steps]])
-  (:import [codeanticode.syphon])
+            [quil.helpers.seqs :refer [seq->stream range-incl cycle-between steps]]
+            [quil.applet :as qa])
+  (:import [codeanticode.syphon.*])
   )
 
 
@@ -12,13 +13,13 @@
 (def height 980)
 
 (defn setup []
-  (q/frame-rate 30)
-
+  (q/frame-rate 60)
+  ;;(:sserver (new SyphonServer [(qa/currentapplet), "test" ]) )
   )
 
 (on-event [:midi :note-on]
           (fn [e]
-           ; (println e)
+;            (println e)
             ;(print (:channel e) )
             ;(print " ")
             ;(print (:note e) )
@@ -36,13 +37,13 @@
                   ;(println (concat (print "stuff = ") (print note)))
                   (if (= channel 1)
                     (swap! sd assoc :note note :velocity vel)
-                    (if (= channel 2)
-
+                    (if (= channel 8)
+                      (swap! chords assoc :note note :velocity vel)
                       ))))
 
               ))
-          ::keyboard-handler)
-
+          :keyboard-handler)
+(remove-event-handler :keyboard-handler)
 (on-event [:midi :control-change]
           (fn [e]
             ;(println e)
@@ -57,7 +58,8 @@
           ::control-handler
           )
 
-
+(defn update [state
+              ])
 
 (defn update [state]
   ;(newt/add-new-particles)
@@ -74,7 +76,7 @@
    :ld1 @ld1
    :ld2 @ld2
    :chords @chords
-   :keys @keys
+   :keyz @keyz
 
    ;:drumbus @(audio-bus-monitor 0)
    ;:contrabus @(audio-bus-monitor 2)
@@ -91,28 +93,35 @@
    })
 
 
-
+(defn draw [state]
+  )
 
 (defn draw [state]
                                         ;(q/text  0 0 10 10 )
 
-  (q/background 25 (* 2 (get @sd :velocity)) 255)
+  ;;(q/background 25 (* 2 (get @sd :velocity)) 255)
 
+
+;;
   (q/with-translation [(* ( get @ch :pan) 10  )  (* (get  @bd :velocity ) 10) 1 ]
     (q/fill 230 (get @ch :note ) (* 16 (mod16)))
     (q/rect 15 (* ( mod16) 0) 300 300)
     (println (mod16))
     )
 
+
+  (q/with-rotation [(get @chords :velocity) 1 1 0]
+
     (q/with-translation [ (+ 100 (* 50 (mod @bbeat 16))) 100 0]
       (q/fill  (get @sd :velocity ) (* 16 (mod16)) 12 )
       (q/box (* (get @bd :velocity)  10))
-                                          )
-    (dotimes [n (get @sd :velocity)]
-      (q/line (* 20 n) 400 (* n 100)  1000)
-                                          )
+      ))
+  (dotimes [n (get @sd :velocity)]
+    (q/line (* 20 n) 400 (* n 100)  1000)
+    )
 
-                                        )
+
+  )
 
 
 
