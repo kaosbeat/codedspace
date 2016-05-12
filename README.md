@@ -19,7 +19,17 @@ leipzig
 
 ##setup
 
+
 ### clone repo
+
+###syphon deps
+http://glgraphics.sourceforge.net/#download
+
+`lein localrepo install lib/GLGraphics.jar glgraphics 1.0.0`
+not sure if above is needed
+check this thread https://groups.google.com/forum/#!topic/clj-processing/ziqpGYp4rrg
+http://v002.info/forums/topic/syphon-server-in-processing-3-not-working/#post-59163
+
 
 ###start midiout app
 you can use the supplied PD-patch (midiclock.pd), but this should be opusmodus, and on the same rhythm as the rest of the instruments.
