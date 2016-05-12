@@ -5,14 +5,18 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :repl-options {:host "0.0.0.0" :port 21337}
 	:resource-paths [
-                   "Syphon/library/jsyphon.jar"
-                   "Syphon/library/libJSyphon.jnilib"
-                   "Syphon/library/Syphon.framework"
-                   "Syphon/library/Syphon.jar"
+                   "resources/Syphon/library/jsyphon.jar"
+                   "resources/Syphon/library/libJSyphon.jnilib"
+                   "resources/Syphon/library/Syphon.framework"
+                   "resources/Syphon/library/Syphon.jar"
                    ]
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [overtone "0.10.1"]
                  [leipzig "0.10.0"]
-                 [quil "2.3.0"]
+                 [quil "2.1.0"]
+                 [glgraphics "1.0.0"]
+                 ;;[com._0xab/jogl "2.1.3"] ;;needed for the syphon hack
                  ]
-:main bossig.core)
+
+
+  :main bossig.core)
