@@ -8,6 +8,7 @@
 
 (piano)
 (midi-connected-devices)
+(event-debug-on)
 (event-debug-off)
 
 
@@ -25,10 +26,10 @@
 (def bd (atom {:note 0 :velocity 0}))
 (def sd (atom {:note 0 :velocity 0}))
 (def ch (atom {:note 0 :velocity 0 :pan 0}))
-(def oh (atom 1))
-(def pc1 (atom 1))
-(def pc2 (atom 1))
-(def ld1 (atom 1))
-(def ld2(atom 1))
+(def oh (atom {:note 0 :velocity 0}))
+(def pc1 (atom {:note 0 :velocity 0}))
+(def pc2 (atom {:note 0 :velocity 0}))
+(def ld1 (atom {:note 0 :velocity 0}))
+(def ld2 (atom {:note 0 :velocity 0}))
 (def chords (atom {:note 0 :velocity 0}))
-(def keyz (atom 1))
+(def keyz (atom {:note 0 :velocity 0}))

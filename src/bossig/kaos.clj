@@ -4,23 +4,30 @@
             [quil.middleware :as m]
             [quil.helpers.seqs :refer [seq->stream range-incl cycle-between steps]]
             [quil.applet :as qa])
-  (:import [codeanticode.syphon.*])
+  (:import ( 'codeanticode.syphon.SyphonServer))
+  (:import ('jsyphon.JSyphonServer))
+; (:import ('com.jogamp.newt.NewtFactory.*))
+ ;(:import ('javax.media.opengl GLCanvas GLEventListener GL GLAutoDrawable))
+ ; (:import ('javax.media.opengl.glu GLU))
+
   )
 
 
 
 (def width 1440)
 (def height 980)
-
+(def server (atom nil))
 (defn setup []
   (q/frame-rate 30)
+ (reset! server (codeanticode.syphon.SyphonServer. (quil.applet/current-applet) "test"))
   ;;(:sserver (new SyphonServer [(qa/currentapplet), "test" ]) )
+ ; {:server ( codeanticode.syphon.SyphonServer. (quil.applet/current-applet) "test2" )}
   )
 
 (on-event [:midi :note-on]
           (fn [e]
          ;(println e)
-            ;(print (:channel e) )
+            ;(println  (:channel e) )
             ;(print " ")
             ;(print (:note e) )
             ;(print " ")
@@ -38,13 +45,24 @@
                   ;(println (concat (print "stuff = ") (print note)))
                   (if (= channel 1)
                     (swap! sd assoc :note note :velocity vel)
-                    (if (= channel 8)
-                      (swap! chords assoc :note note :velocity vel)
-                      ))))
-
-              ))
+                    (if (= channel 2)
+                      (swap! ch  assoc :note note :velocity vel)
+                      (if (= channel 3)
+                        (swap! oh assoc :note note :velocity vel)
+                        (if (= channel 4)
+                          (swap! pc1 assoc :note note :velocity vel)
+                          (if (= channel 5)
+                            (swap! pc2 assoc :note note :velocity vel)
+                            (if (= channel 6)
+                              (swap! ld1 assoc :note note :velocity vel)
+                              (if (= channel 7)
+                                (swap! ld2 assoc :note note :velocity vel)
+                                (if (= channel 8)
+                                  (swap! chords assoc :note note :velocity vel)
+                                  (if (= channel 9)
+                                    (swap! keyz assoc :note note :velocity vel) )))))))))))))
           ::keyboard-handler)
-;;(remove-event-handler :keyboard-handler)
+;(remove-event-handler ::keyboard-handler)
 
 (println @bd)
 @bd
@@ -55,7 +73,7 @@
             (let [data1 (:data1 e)
                   data2 (:data2 e)
                   channel (:channel e)]
-              (if (and  (= channel 2) (= data1 1))
+              (if (and  (= channel 1) (= data1 10))
                 (swap! ch assoc :pan data2)
                 )
               )
@@ -106,8 +124,8 @@
 
 ;;
   (q/with-translation [(* ( get @ch :pan) 10  )  (* (get  @bd :velocity ) 10) 1 ]
-    ;(q/fill 230 (get @ch :note ) (* 16 (mod16)))
-    ;(q/rect 15 (* ( mod16) 0) 300 300)
+    (q/fill 230 (get @ch :note ) (* 16 (mod16)))
+    (q/rect 15 (* ( mod16) 0) 300 300)
     ;(println (mod16))
     )
 
@@ -116,13 +134,14 @@
 
     (q/with-translation [ (+ 100 (* 50 (mod @bbeat 16))) 100 0]
       (q/fill  (get @sd :velocity ) (* 16 (mod16)) 12 )
-     ; (q/box (* (get @bd :velocity)  10))
+      (q/box (* (get @bd :velocity)  10))
       ))
   (dotimes [n (get @sd :velocity)]
     (q/line (* 20 n) 400 (* n 100)  10)
     )
 
-
+  (.sendScreen @server )
+  ;(.sendScreen ( :server state))
   )
 
 
