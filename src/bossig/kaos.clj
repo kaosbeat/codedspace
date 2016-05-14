@@ -72,6 +72,7 @@
   (q/background [ 1 128 0]
 
                 (bassdrum [state]))
+  (.sendScreen @server)
   )
 
 (defn draw1 [state]
