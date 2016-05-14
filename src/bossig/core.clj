@@ -23,6 +23,7 @@
 (defn mod2 [] (mod @bbeat 2))
 ; poc code, the beatcount @bbeat is increased on EVERY incoming midi message, this need to be filtered
 
+
 (def bd (atom {:note 0 :velocity 0}))
 (def sd (atom {:note 0 :velocity 0}))
 (def ch (atom {:note 0 :velocity 0 :pan 0}))
