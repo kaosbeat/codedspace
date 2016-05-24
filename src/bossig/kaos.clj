@@ -71,11 +71,18 @@
    ;:contra (get (get-in @live-pats [contra])(mod @bbeat (count (get-in @live-pats [contra]))))
    })
 (defn draw [state]
-  (q/background [ 1 128 0]
+  (q/background  1 12 0)
+  (q/with-translation [ 1000 500 100]
+   ; (q/box (get (:bd state) :note) )
 
-  (bassdrum [state]))
-  (.sendScreen @server)
+    (bassdrum state))
+  (clicktrack state)
   )
+
+                                        ;(bassdrum [state])
+
+(.sendScreen @server)
+
 
 (defn draw1 [state]
   (q/background 25 (* 2 (get @sd :velocity)) (* (tr) 23))
