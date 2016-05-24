@@ -17,6 +17,8 @@
 
 (def width 1440)
 (def height 980)
+(def width 1920)
+(def height 1200)
 (def server (atom nil))
 (def tr (seq->stream (cycle-between 1 1 16 0.1 0.1)))
 
@@ -30,7 +32,7 @@
 
 ;(remove-event-handler ::keyboard-handler)
 
-(println @bd)
+;;(println @bd)
 
 
 
@@ -39,7 +41,7 @@
 
 
 
-(defn update2 [state]
+(defn update [state]
     {
    :beat @bbeat
    :bd @bd
@@ -71,7 +73,7 @@
 (defn draw [state]
   (q/background [ 1 128 0]
 
-                (bassdrum [state]))
+  (bassdrum [state]))
   (.sendScreen @server)
   )
 
