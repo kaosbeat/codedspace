@@ -10,5 +10,5 @@
 (defn clicktrack [state]
   (q/stroke-weight 10)
   (q/stroke 100 50 210)
-  (q/line (* (get (:ch state) :pan) 10) 500 1920 500 )
+  (q/line (* (get (:ch state) :pan) 10) (* 1200 (q/noise (q/random 0.5))) 1920 (* 5000 (q/noise (q/random 20))) )
   )

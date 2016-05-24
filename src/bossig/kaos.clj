@@ -57,7 +57,7 @@
 
    :tr (tr)
 
-   ;:drumbus @(audio-bus-monitor 0)
+   :drumbus @(audio-bus-monitor 0)
    ;:contrabus @(audio-bus-monitor 2)
    ;:fmtonesbus @(audio-bus-monitor 4)
    ;:fmchordsbus @(audio-bus-monitor 6)
@@ -77,11 +77,8 @@
 
     (bassdrum state))
   (clicktrack state)
-  )
 
-                                        ;(bassdrum [state])
-
-(.sendScreen @server)
+  (.sendScreen @server))
 
 
 (defn draw1 [state]
