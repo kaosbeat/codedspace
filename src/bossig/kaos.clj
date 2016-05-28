@@ -21,6 +21,18 @@
 (def height 1200)
 (def server (atom nil))
 (def tr (seq->stream (cycle-between 1 1 16 0.1 0.1)))
+(defsynth tapper
+  []
+  (let [source (sound-in 2 1)
+        left (select 0 source)
+        right (select 1 source)
+        _ (tap :left 10 left)
+        _ (tap :right 10 right)
+        _ (tap :phase 10 (- left right))]
+    (out [0 1] [left right])))
+
+(def intap (tapper))
+
 
 (defn setup []
   (q/frame-rate 30)
@@ -61,7 +73,7 @@
    ;:contrabus @(audio-bus-monitor 2)
    ;:fmtonesbus @(audio-bus-monitor 4)
    ;:fmchordsbus @(audio-bus-monitor 6)
-   ;:axobus  @(get-in axotapper [:taps :left])
+   :bus  @(get-in intap [:taps :left])
    ;:kickA (getkick)
 
    ;:snareA (get (get-in @live-pats [snareA]) (mod @bbeat (count (get-in @live-pats [snareA]))))
@@ -72,11 +84,12 @@
    })
 (defn draw [state]
   (q/background  1 12 0)
-  (q/with-translation [ 1000 500 100]
-   ; (q/box (get (:bd state) :note) )
 
-    (bassdrum state))
-  (clicktrack state)
+  (q/with-translation [ 1000 500 -1000]
+                                        ; (q/box (get (:bd state) :note) )
+    (q/with-rotation [(get (:sd state) :velocity) 1 0 1 ]
+      (bassdrum state))
+    (clicktrack state))
 
   (.sendScreen @server))
 
