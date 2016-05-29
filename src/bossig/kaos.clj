@@ -85,11 +85,13 @@
 (defn draw [state]
   (q/background  1 12 0)
 
-  (q/with-translation [ 1000 500 -1000]
+  (dotimes [n (count @kick)]
+    (q/with-translation [(* n (/ width (count @kick))) (* (get @kick n) (* (tr) 20)) -1000]
                                         ; (q/box (get (:bd state) :note) )
-    (q/with-rotation [(get (:sd state) :velocity) 1 0 1 ]
-      (bassdrum state))
-    (clicktrack state))
+      (q/with-rotation [(*  (get @kick n) (get (:sd state) :velocity)) 1 0 1 ]
+        (if (= n (mod8))
+          (bassdrum state)))
+      (clicktrack state)))
 
   (.sendScreen @server))
 
@@ -114,21 +116,14 @@
   )
 
 (defn draw [state]
-
-
   (q/background 25 (* 2 (get @sd :velocity)) 255)
-
-
 ;;
   (q/with-translation [(* ( get @ch :pan) 10  )  (* (get  @bd :velocity ) 10) 1 ]
     (q/fill 230 (get @ch :note ) (* 16 (mod16)))
     (q/rect 15 (* ( mod16) 0) 300 300)
     ;(println (mod16))
     )
-
-
   (q/with-rotation [(get @chords :velocity) 1 1 0]
-
     (q/with-translation [ (+ 100 (* 50 (mod @bbeat 16))) 100 0]
       (q/fill  (get @sd :velocity ) (* 16 (mod16)) 12 )
       (q/box (* (get @bd :velocity)  10))
