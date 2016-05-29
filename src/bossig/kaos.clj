@@ -90,9 +90,13 @@
                                         ; (q/box (get (:bd state) :note) )
       (q/with-rotation [(*  (get @kick n) (get (:sd state) :velocity)) 1 0 1 ]
         (if (= n (mod8))
-          (bassdrum state)))
-      (clicktrack state)))
+          (bassdrum state)
 
+          ))
+;      (clicktrack state)
+      ))
+  (q/with-translation [ 500 0 -1000 ]
+    (dynlines state))
   (.sendScreen @server))
 
 
