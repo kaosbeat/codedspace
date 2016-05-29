@@ -34,3 +34,13 @@
 (def ld2 (atom {:note 0 :velocity 0}))
 (def chords (atom {:note 0 :velocity 0}))
 (def keyz (atom {:note 0 :velocity 0}))
+
+
+; adapted from http://blog.josephwilk.net/
+; needs https://github.com/josephwilk/mud
+(defsynth data-probes [timing-signal-bus 0]
+  (let [beat-count (in:kr timing-signal-bus)
+        _  (tap "global-beat-count" 60 (a2k beat-count))]
+    (out 0 0)))
+
+;(def active-data-probes (data-probes (:count time/beat-1th)))

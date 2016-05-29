@@ -146,7 +146,6 @@
 
 
 
-
 (q/defsketch halic
   :title "halic"
   ;;  :size :fullscreen

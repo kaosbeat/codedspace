@@ -3,26 +3,37 @@
 
 (on-event [:midi :timing-clock]
           (fn [e]
-         (println e)
+            (println e)
             ;(println  (:channel e) )
             ;(print " ")
             ;(print (:note e) )
             ;(print " ")
 
 
-            (let [note (:note e)
-                  vel  (:velocity e)
-                  channel (:channel e)]
-              (println channel note vel)
-
-              ))
+            )
           ::clock-handler
           )
 
 
+(on-event [:midi :midi-time-code]
+          (fn [e]
+            (println e)
+            ;(println  (:channel e) )
+            ;(print " ")
+            ;(print (:note e) )
+            ;(print " ")
+
+
+            )
+          ::clock-handler2
+          )
+
+(remove-event-handler ::clock-handler)
+
+
 (on-event [:midi :note-on]
           (fn [e]
-         ;(println e)
+            ;(println e)
             ;(println  (:channel e) )
             ;(print " ")
             ;(print (:note e) )
