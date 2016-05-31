@@ -81,10 +81,16 @@
    ;:fmchord (get  (getchords) :carrier)
    ;:fmtones (nth (map #(or (:carrier %) (:depth %) 0)  (get-in @live-pats [fmtones])) (mod @bbeat (count (get-in @live-pats [fmtones]))))
    ;:contra (get (get-in @live-pats [contra])(mod @bbeat (count (get-in @live-pats [contra]))))
-   })
+    :lines (swap! linesdyn assoc 6 (tr))
+     }
+
+)
+
 (defn draw [state]
   (q/background  1 12 0)
-
+                                        ;(println (:lines state))
+  (q/with-translation [500 500 0]
+    (circlejoy state))
   (dotimes [n (count @kick)]
     (q/with-translation [(* n (/ width (count @kick))) (* (get @kick n) (* (tr) 20)) -1000]
                                         ; (q/box (get (:bd state) :note) )
@@ -100,7 +106,7 @@
   (.sendScreen @server))
 
 
-(defn draw1 [state]
+(defn draw [state]
   (q/background 25 (* 2 (get @sd :velocity)) (* (tr) 23))
   (q/with-translation [0 2000 -1000]
     (q/with-rotation [(* 0.1 (mod16))  1 0 0 ]
