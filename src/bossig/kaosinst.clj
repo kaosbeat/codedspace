@@ -96,10 +96,10 @@
   (swap! pills conj {:x x :y y :ttl ttl })
   )
 
-(addpill 25 1 2  )
-(addpill 25 2 3  )
-(addpill 25 3 4  )
-(addpill 25 4 5 )
+(addpill 250 500 312  )
+(addpill 25 2 30  )
+(addpill 25 3 42  )
+(addpill 25 4 50 )
 
 (def pillcount ( atom []))
 
@@ -122,5 +122,18 @@
 
 (updatepills)
 (defn renderpills [state]
+  (q/no-stroke)
+  (dotimes [n (count @pills)]
+    (q/with-translation [(get (nth @pills n) :x) (get (nth @pills n) :y) -100]
+      (q/fill (* 4 (get (nth @pills n)  :ttl)))
+      (q/ellipse 0 0 50 50)
+      (q/rect 0 -25 50 50)
+      (q/ellipse 50 0 50 50)))
+  (q/stroke 255)
+  )
 
+
+
+(defn renderpills [state]
+   (q/ellipse 500 500 500 500)
   )

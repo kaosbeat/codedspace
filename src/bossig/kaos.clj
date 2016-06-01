@@ -89,8 +89,10 @@
 (defn draw [state]
   (q/background  1 12 0)
                                         ;(println (:lines state))
+  (addpill ( int (q/random 300)) (int (q/random 500)) 60)
   (q/with-translation [500 500 0]
-    (circlejoy state))
+   ; (circlejoy state)
+    )
 
   (dotimes [n (count @kick)]
     (q/with-translation [(* n (/ width (count @kick))) (* (get @kick n) (* (tr) 20)) -1000]
@@ -103,7 +105,11 @@
 ;      (clicktrack state)
       ))
   (q/with-translation [ 500 0 -1000 ]
-    (dynlines state))
+    ;(dynlines state)
+    )
+  (updatepills)
+  (q/with-translation [500 500 0]
+    (renderpills state))
   (.sendScreen @server))
 
 
