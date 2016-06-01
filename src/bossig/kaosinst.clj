@@ -1,5 +1,20 @@
 (ns bossig.core)
 
+;;helpers
+(defn drop-nth [n coll]
+  ;;keep indexed changes coll from [] to () so added (vec)
+  (vec (keep-indexed #(if (not= %1 n) %2) coll))
+
+  ;  (if (= n 0)
+  ;  (vec (drop 1 coll))
+  ;(if (= n (count coll))
+  ;  (pop coll)
+  ;  (vec (concat (subvec coll 0 n) (subvec coll (+ 1 n) (count coll))))))
+  )
+
+
+
+
 ;; buffers go here
 (defonce buf-0 (buffer 8))
 ;;to get data from a buffer, do (buffer-get buf-0 7)
@@ -24,6 +39,9 @@
   )
 
 
+(defn bassdrum [state]
+  (q/box 50)
+  )
 
 
 
@@ -38,7 +56,7 @@
 
 (def linesdyn (atom [0 1 2 7 4 5 -1 -4 1 0]))
 (defn dynlines [state]
-  (q/stroke 255 255 255 128)
+  (q/stroke (* 15 (tr)) 255 255 128)
   (q/stroke-weight 10)
   (dotimes [p 10]
           (q/with-translation [(* p 250) 0 0 ]
@@ -56,7 +74,53 @@
 
 (event-debug-off)
 
+(defn circlejoy [state]
+  (dotimes [n (mod16)]
+    (q/with-translation [ 0 0 (* -300 (+ 0 n))]
+      (q/ellipse 0 0 (* n 200) (* n 200))))
 
+  )
+
+(addpill 10 2 2)
 
 (def kick (atom [0 1 0]))
 (reset! kick [0 5 2 6 3 3.4 1 0 2 10 2 20 39 3 4  ] )
+
+
+;define structure to hold pills
+(def pills (atom [{:size 10 :x 100 :y 100 }  {:size 20 :x 200 :y 200 }  ]))
+;addpill to atom
+(defn addpill [x y ttl]
+  (if (= 0 (count @pills))
+    (reset! pills []))
+  (swap! pills conj {:x x :y y :ttl ttl })
+  )
+
+(addpill 25 1 2  )
+(addpill 25 2 3  )
+(addpill 25 3 4  )
+(addpill 25 4 5 )
+
+(def pillcount ( atom []))
+
+(defn updatepills []
+  ; for some reason not all pills are deleted
+  (reset! pillcount [])
+  (dotimes [n (count @pills)]
+    (if (false? (= 0 (get (get @pills n) :ttl)))
+      ;decrease TTL in pill if ttl > 0
+      (swap! pills update-in [n :ttl] dec)
+      ;else mark pill for deletion
+      (swap! pillcount conj n)
+      ;(reset! @pills [0 9 0])
+      )
+    )
+  (dotimes [n (count @pillcount)]
+    (reset! pills  (drop-nth (nth @pillcount n) @pills)))
+  ;(println @pills)
+  )
+
+(updatepills)
+(defn renderpills [state]
+
+  )

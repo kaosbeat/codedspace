@@ -91,6 +91,7 @@
                                         ;(println (:lines state))
   (q/with-translation [500 500 0]
     (circlejoy state))
+
   (dotimes [n (count @kick)]
     (q/with-translation [(* n (/ width (count @kick))) (* (get @kick n) (* (tr) 20)) -1000]
                                         ; (q/box (get (:bd state) :note) )
