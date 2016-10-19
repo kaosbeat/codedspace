@@ -62,7 +62,7 @@
   (q/stroke (* 15 (tr)) 255 255 128)
   (q/stroke-weight 10)
   (dotimes [p 10]
-          (q/with-translation [(* p 250) 0 0 ]
+          (q/with-translation [(* p (tr)) 0 0 ]
             (dotimes [n (-   (count @linesdyn) 1)]
               (q/with-rotation [ (q/random 0 0) 1 0 0]
 
@@ -76,6 +76,17 @@
   )
 
 (event-debug-off)
+
+(tr)
+(defn wavelines [topsegments bottomsegments maxheight minheight color offset]
+  (dotimes [n 100]
+    (q/line (* n 50) 0
+            (* n 50) 1000)
+    )
+
+  )
+
+
 
 (defn circlejoy [state]
   (dotimes [n (mod16)]
