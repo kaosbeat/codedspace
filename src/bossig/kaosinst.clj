@@ -1,6 +1,9 @@
 (ns bossig.core)
 
+
+
 ;;helpers
+(def tr (seq->stream (cycle-between 1 1 16 0.1 15)))
 (defn drop-nth [n coll]
   ;;keep indexed changes coll from [] to () so added (vec)
   (vec (keep-indexed #(if (not= %1 n) %2) coll))
@@ -81,14 +84,16 @@
 
   )
 
-(addpill 10 2 2)
+
 
 (def kick (atom [0 1 0]))
 (reset! kick [0 5 2 6 3 3.4 1 0 2 10 2 20 39 3 4  ] )
+(reset! kick [0 1 5 6 4 6  ] )
 
 
 ;define structure to hold pills
 (def pills (atom [{:size 10 :x 100 :y 100 }  {:size 20 :x 200 :y 200 }  ]))
+(reset! pills [])
 ;addpill to atom
 (defn addpill [x y ttl]
   (if (= 0 (count @pills))
@@ -120,7 +125,7 @@
   ;(println @pills)
   )
 
-(updatepills)
+;(updatepills)
 (defn renderpills [state]
   (q/no-stroke)
   (dotimes [n (count @pills)]
@@ -135,5 +140,13 @@
 
 
 (defn renderpills [state]
-   (q/ellipse 500 500 500 500)
+
+(dotimes [n (count @pills)]
+    (q/with-translation [(get (nth @pills n) :x) (get (nth @pills n) :y) -100]
+      (q/fill 24 130 23 (* 4 (get (nth @pills n)  :ttl)))
+      (if (= 0 (mod2))
+        (q/box 20 20 1000)
+        (q/box 20 1000 20))
+      ))
+
   )

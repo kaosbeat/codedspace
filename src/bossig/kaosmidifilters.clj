@@ -17,7 +17,7 @@
 
 (on-event [:midi :midi-time-code]
           (fn [e]
-            (println e)
+           ; (println e)
             ;(println  (:channel e) )
             ;(print " ")
             ;(print (:note e) )
@@ -78,7 +78,7 @@
             (let [data1 (:data1 e)
                   data2 (:data2 e)
                   channel (:channel e)]
-              (if (and  (= channel 1) (= data1 10))
+              (if (and  (= channel 2) (= data1 10))
                 (swap! ch assoc :pan data2)
                 )
               )

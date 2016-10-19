@@ -89,7 +89,8 @@
 (defn draw [state]
   (q/background  1 12 0)
                                         ;(println (:lines state))
-  (addpill ( int (q/random 300)) (int (q/random 500)) 60)
+
+  (addpill (* 20 (get (:ld1 state) :note))  (* 5 (get (:ld1 state) :velocity))   60 )
   (q/with-translation [500 500 0]
    ; (circlejoy state)
     )
@@ -108,8 +109,9 @@
     ;(dynlines state)
     )
   (updatepills)
-  (q/with-translation [500 500 0]
-    (renderpills state))
+  (q/with-translation [500 500 (* -10 (get (:ch state) :pan ))]
+    (renderpills state)
+    )
   (.sendScreen @server))
 
 
