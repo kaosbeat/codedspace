@@ -4,6 +4,10 @@
 
 ;;helpers
 (def tr (seq->stream (cycle-between 1 1 16 0.1 15)))
+
+
+
+
 (defn drop-nth [n coll]
   ;;keep indexed changes coll from [] to () so added (vec)
   (vec (keep-indexed #(if (not= %1 n) %2) coll))
@@ -78,11 +82,66 @@
 (event-debug-off)
 
 (tr)
-(defn wavelines [topsegments bottomsegments maxheight minheight color offset]
-  (dotimes [n 100]
-    (q/line (* n 50) 0
-            (* n 50) 1000)
+
+
+(defn tester  [bottomsegments minbottom maxbottom waveint]
+  (range minbottom (rand-int maxbottom ) waveint ))
+
+(defn tester []
+  (fn this [a b] (+ a b) ))
+
+(defn tester [start end step]
+  (concat start  (range  (last start) end step))
+  )
+
+( take 3 (iterate  (tester [1] 20 2)) 3)
+
+(tester 1 5 200 3)
+
+(defn tester []
+  (let [x [0 200 150 500 200 0]
+        min 0
+        max 300
+        ]
+    (dotimes [n 6]
+
+      )
     )
+  )
+
+
+
+
+(defn wavelines [wavewidth waveint topsegments bottomsegments starttop mintop maxtop startbottom minbottom maxbottom color offset]
+
+
+  (q/stroke-weight 1)
+  (let [top [starttop]
+        bottom [startbottom]
+        ]
+    (dotimes [t topsegments]
+      (let [x (q/random mintop maxtop)]
+        ;(println)
+        (into [] (concat top (range (last top) x waveint )))
+        ((if (= t topsegments)
+           ()
+           else-expr) )
+        )
+
+      )
+
+
+    (dotimes [b bottomsegments]
+      (let [x (q/random minbottom maxbottom)]
+        ( into [] (concat bottom (range (last bottom) x waveint )))
+        ))
+
+
+    (dotimes [n 10]
+      (q/line (* n 5) (nth top 0)
+              (* n 5) (nth bottom 0)
+              )
+      ))
 
   )
 
