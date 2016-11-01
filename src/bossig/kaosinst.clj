@@ -94,9 +94,9 @@
   (concat start  (range  (last start) end step))
   )
 
-( take 3 (iterate  (tester [1] 20 2)) 3)
+;( take 3 (iterate  (tester [1] 20 2)) 3)
 
-(tester 1 5 200 3)
+;(tester 1 5 200 3)
 
 (defn tester []
   (let [x [0 200 150 500 200 0]
@@ -112,6 +112,7 @@
 
 
 
+
 (defn wavelines [wavewidth waveint topsegments bottomsegments starttop mintop maxtop startbottom minbottom maxbottom color offset]
 
 
@@ -123,9 +124,7 @@
       (let [x (q/random mintop maxtop)]
         ;(println)
         (into [] (concat top (range (last top) x waveint )))
-        ((if (= t topsegments)
-           ()
-           else-expr) )
+
         )
 
       )
@@ -146,6 +145,44 @@
   )
 
 
+(defn segment [size space starttop stoptop startbottom stopbottom]
+  (let  [top (range starttop stoptop (/ (- stoptop starttop) size ))
+         bottom (range startbottom stopbottom (/ (- stopbottom startbottom) size ))
+         ]
+       (dotimes [n size]
+         (q/line
+          (* n space) (nth top n)
+          (* n space) (nth bottom n)
+          )
+
+
+         ))
+
+  )
+
+(defn wavelines [wavewidth waveint topsegments bottomsegments starttop mintop maxtop startbottom minbottom maxbottom color offset]
+
+  (q/stroke-weight 2)
+  (q/with-translation [(+ (mod4) 500 ) 200 0]
+    (q/stroke 255 23 34)
+    (segment 100 10 (* 4 (get @bd :note)) (* 100 (tr)) (* 1 300) 90))
+  (q/stroke 55 13 252)
+  (segment 100 10 100 1000 300 90)
+)
+
+(defn wavelines [wavewidth parts offset bottomsegments starttop mintop maxtop startbottom minbottom maxbottom color offset]
+  ;(wavelines 100 5 2 3 1 200 1200 14 10 1000 10 10 )
+  (q/with-translation [(+ 300 offset) 300 0]
+    (dotimes [n parts]
+      (segment (* (+ n 1) (/ wavewidth parts)) n (* 4 (get @bd :note)) (* 30 (get @sd :note)) 300 90 )
+      ))
+
+
+  )
+
+
+
+
 
 (defn circlejoy [state]
   (dotimes [n (mod16)]
@@ -153,7 +190,6 @@
       (q/ellipse 0 0 (* n 200) (* n 200))))
 
   )
-
 
 
 (def kick (atom [0 1 0]))

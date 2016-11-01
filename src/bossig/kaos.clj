@@ -95,6 +95,8 @@
    ; (circlejoy state)
     )
 
+
+
   (dotimes [n (count @kick)]
     (q/with-translation [(* n (/ width (count @kick))) (* (get @kick n) (* (tr) 20)) -1000]
                                         ; (q/box (get (:bd state) :note) )
@@ -103,7 +105,7 @@
           (bassdrum state)
 
           ))
-;      (clicktrack state)
+                                        ;      (clicktrack state)
       ))
   (q/with-translation [ 500 0 -1000 ]
     ;(dynlines state)
@@ -112,11 +114,14 @@
   (q/with-translation [500 500 (* -10 (get (:ch state) :pan ))]
     (renderpills state)
     )
+
+
+
   (.sendScreen @server))
 
 
 (defn draw [state]
-  (q/background 25 (* 2 (get @sd :velocity)) (* (tr) 23))
+  ;(q/background 25 (* 2 (get @sd :velocity)) (* (tr) 23))
   (q/with-translation [0 2000 -1000]
     (q/with-rotation [(* 0.1 (mod16))  1 0 0 ]
       (dotimes [ x (get @bd :velocity)]
@@ -130,6 +135,9 @@
               (q/box 50)
               (q/box (* y 5))))
           ))))
+
+  (wavelines 1000 5 2 3 1 200 1200 14 10 1000 10 10 )
+
   (.sendScreen @server)
 
   )
