@@ -33,11 +33,13 @@
 
 (on-event [:midi :note-on]
           (fn [e]
-            (println e)
-            ;(println  (:channel e) )
-            ;(print " ")
-            ;(print (:note e) )
-            ;(print " ")
+            ;;(println e)
+            ;;(println "channel  ")
+            ;;(print  (:channel e) )
+            ;;(print "note ")
+            ;;(print (:note e) )
+            ;;
+            (print " ")
 
 
             (let [note (:note e)

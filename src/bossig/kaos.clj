@@ -87,12 +87,12 @@
 )
 
 (defn draw [state]
-  (q/background  1 12 0)
+  (q/background  100 120 0)
                                         ;(println (:lines state))
 
-  (addpill (* 20 (get (:ld1 state) :note))  (* 5 (get (:ld1 state) :velocity))   60 )
+  (addpill (* 50 (get (:ld1 state) :note)) (* -20 (get (:ld1 state) :velocity)) 0  200)
   (q/with-translation [500 500 0]
-   ; (circlejoy state)
+    ;(circlejoy state)
     )
 
 
@@ -108,9 +108,10 @@
                                         ;      (clicktrack state)
       ))
   (q/with-translation [ 500 0 -1000 ]
+    (q/stroke-weight 1)
     ;(dynlines state)
     )
-  (updatepills)
+  (updatepills) ;;;pillstate is a bit boring at the moment....
   (q/with-translation [500 500 (* -10 (get (:ch state) :pan ))]
     (renderpills state)
     )
@@ -121,26 +122,53 @@
 
 
 (defn draw [state]
-  ;(q/background 25 (* 2 (get @sd :velocity)) (* (tr) 23))
-  (q/with-translation [0 2000 -1000]
-    (q/with-rotation [(* 0.1 (mod16))  1 0 0 ]
+  (q/background 0 (* 2 (get @sd :velocity)) (* (tr) 2))
+  (q/with-translation [0 (get @sd :velocity) -300]
+    (q/with-rotation [(* (/ 360 16) (mod16))  1 0 0 ]
       (dotimes [ x (get @bd :velocity)]
         (dotimes [ y (get @bd :velocity)]
-          ;(q/with-rotation [(get @sd note) 0 1 0])
-          (q/with-translation [ (* x (get @bd :note) 1)
+          (q/with-rotation [(* 80  (get @sd :note)) 0 1 1])
+          (q/with-translation [ (* x (get @bd :note) 10)
                                 (* y -100)
                                 (* 100 0) ]
-            (q/fill (* (get @bd :velocity) 5 ) 0 23)
+            (q/fill (* (get @bd :velocity) 2 ) 0 23)
             (if (= x 2)
               (q/box 50)
               (q/box (* y 5))))
           ))))
 
-  (wavelines 1000 5 2 3 1 200 1200 14 10 1000 10 10 )
+
 
   (.sendScreen @server)
 
   )
+
+(defn draw [state]
+  (q/background 0)
+
+
+  (joywaves 600 10 [100 200])
+(wavelines 1000 5 2 3 1 200 1200 14 10 1000 100 10 )
+  (q/with-rotation [(* 10 (get @sd :velocity)) 0 1 0]
+
+
+
+                                        ;( q/with-rotation [(get @bd :note) 0 1 0])
+
+
+    (wavelines 100 10 2 3 1 200 1200 14 10 1000 10 10 )
+    (q/stroke 255 34 43)
+    (wavelines 14 300 2 3 1 200 120 14 10 100 300 30 ))
+
+
+
+
+  (.sendScreen @server))
+
+
+
+
+
 
 (defn draw [state]
   (q/background 25 (* 2 (get @sd :velocity)) 255)

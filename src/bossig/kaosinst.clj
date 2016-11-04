@@ -113,7 +113,7 @@
 
 
 
-(defn wavelines [wavewidth waveint topsegments bottomsegments starttop mintop maxtop startbottom minbottom maxbottom color offset]
+(defn wavelinesOLD [wavewidth waveint topsegments bottomsegments starttop mintop maxtop startbottom minbottom maxbottom color offset]
 
 
   (q/stroke-weight 1)
@@ -176,9 +176,27 @@
     (dotimes [n parts]
       (segment (* (+ n 1) (/ wavewidth parts)) n (* 4 (get @bd :note)) (* 30 (get @sd :note)) 300 90 )
       ))
+  )
+
+
+(defn wavelines [wavewidth parts test bottomsegments starttop mintop maxtop startbottom minbottom maxbottom color offset]
+  ;(wavelines 100 5 2 3 1 200 1200 14 10 1000 10 10 )
+  (q/with-translation [(+ 300 offset) 300 0]
+    (q/stroke 0 (q/random 250) color)
+    (dotimes [n parts]
+      (segment (* (+ n 1) (/ wavewidth parts)) n (* 4 (get @bd :note)) (* 30 (get @sd :note)) 300 90 )
+      ))
 
 
   )
+
+(defn joywaves [wavewidth parts top]
+  (q/stroke 255)
+  (dotimes [n parts]
+    (segment (* (+ n 1) (/ wavewidth parts)) n (nth top (mod parts (count top))) (* 30 (get @sd :note)) 300 90  )
+    ))
+
+
 
 
 
@@ -200,17 +218,18 @@
 ;define structure to hold pills
 (def pills (atom [{:size 10 :x 100 :y 100 }  {:size 20 :x 200 :y 200 }  ]))
 (reset! pills [])
-;addpill to atom
-(defn addpill [x y ttl]
+                                        ;addpill to atom
+
+(defn addpill [x y z ttl]
   (if (= 0 (count @pills))
     (reset! pills []))
-  (swap! pills conj {:x x :y y :ttl ttl })
+  (swap! pills conj {:x x :y y :z z :ttl ttl })
   )
 
-(addpill 250 500 312  )
-(addpill 25 2 30  )
-(addpill 25 3 42  )
-(addpill 25 4 50 )
+(addpill 250 500 312 12 )
+(addpill 25 2 30 35 )
+(addpill 25 3 0 42  )
+(addpill 25 4 0 50 )
 
 (def pillcount ( atom []))
 
@@ -220,13 +239,17 @@
   (dotimes [n (count @pills)]
     (if (false? (= 0 (get (get @pills n) :ttl)))
       ;decrease TTL in pill if ttl > 0
-      (swap! pills update-in [n :ttl] dec)
+      (do
+        (swap! pills update-in [n :ttl] dec)
+        (swap! pills update-in [n :z] (fn [x] (rand-int -670)))
+        )
       ;else mark pill for deletion
       (swap! pillcount conj n)
       ;(reset! @pills [0 9 0])
       )
     )
   (dotimes [n (count @pillcount)]
+;    (println " really dropping stuff")
     (reset! pills  (drop-nth (nth @pillcount n) @pills)))
   ;(println @pills)
   )
@@ -235,7 +258,7 @@
 (defn renderpills [state]
   (q/no-stroke)
   (dotimes [n (count @pills)]
-    (q/with-translation [(get (nth @pills n) :x) (get (nth @pills n) :y) -100]
+    (q/with-translation [(get (nth @pills n) :x) (get (nth @pills n) :y) (get (nth @pills n) :z) ]
       (q/fill (* 4 (get (nth @pills n)  :ttl)))
       (q/ellipse 0 0 50 50)
       (q/rect 0 -25 50 50)
@@ -254,5 +277,20 @@
         (q/box 20 20 1000)
         (q/box 20 1000 20))
       ))
+
+  )
+
+
+(defn renderpills [state]
+  (dotimes [n (count @pills)]
+    (q/with-translation [(get (nth @pills n) :x ) (get (nth @pills n) :y )  (* 10  (get (nth @pills n) :z ))]
+      (q/fill 245 23 (q/random 230))
+      (if (= 0 (mod n 2))
+        (q/box 50 100 40 )
+        (q/box 100 50 50))
+
+      )
+
+    )
 
   )
