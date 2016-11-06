@@ -1,6 +1,4 @@
-(ns bossig.core)
-
-
+(ns bossig.core )
 
 ;;helpers
 (def tr (seq->stream (cycle-between 1 1 16 0.1 15)))
@@ -277,20 +275,5 @@
         (q/box 20 20 1000)
         (q/box 20 1000 20))
       ))
-
-  )
-
-
-(defn renderpills [state]
-  (dotimes [n (count @pills)]
-    (q/with-translation [(get (nth @pills n) :x ) (get (nth @pills n) :y )  (* 10  (get (nth @pills n) :z ))]
-      (q/fill 245 23 (q/random 230))
-      (if (= 0 (mod n 2))
-        (q/box 50 100 40 )
-        (q/box 100 50 50))
-
-      )
-
-    )
 
   )

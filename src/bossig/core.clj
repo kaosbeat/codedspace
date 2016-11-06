@@ -1,10 +1,19 @@
 (ns bossig.core
+
+
+
+                                        ; (:import ('com.jogamp.newt.NewtFactory.*))
+                                        ;(:import ('javax.media.opengl GLCanvas GLEventListener GL GLAutoDrawable))
+ ; (:import ('javax.media.opengl.glu GLU))
+
+
+
   (:use [overtone.live]
-        [overtone.inst.piano])
+        [overtone.inst.piano]))
 
 
 
-  )
+
 
 (piano)
 (midi-connected-devices)
@@ -16,6 +25,8 @@
 
                                         ;beatclock
 (def bbeat (atom 1))
+
+
 
 (defn mod16 [] (mod @bbeat 16))
 (defn mod8 [] (mod @bbeat 8))

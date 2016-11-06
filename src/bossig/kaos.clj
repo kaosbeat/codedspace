@@ -5,20 +5,18 @@
             [quil.helpers.seqs :refer [seq->stream range-incl cycle-between steps]]
             [quil.applet :as qa]
             [bossig.kaosinst])
-  (:import ( 'codeanticode.syphon.SyphonServer))
-  (:import ('jsyphon.JSyphonServer))
-                                        ; (:import ('com.jogamp.newt.NewtFactory.*))
-                                        ;(:import ('javax.media.opengl GLCanvas GLEventListener GL GLAutoDrawable))
- ; (:import ('javax.media.opengl.glu GLU))
+    (:import ( 'codeanticode.syphon.SyphonServer))
+    (:import ('jsyphon.JSyphonServer))
 
-  )
+    )
+
 
 
 
 (def width 1440)
 (def height 980)
-(def width 1920)
-(def height 1200)
+;(def width 1920)
+;(def height 1200)
 (def server (atom nil))
 (def tr (seq->stream (cycle-between 1 1 16 0.1 0.1)))
 (defsynth tapper
@@ -45,9 +43,6 @@
 ;(remove-event-handler ::keyboard-handler)
 
 ;;(println @bd)
-
-
-
 
 
 
@@ -86,6 +81,9 @@
 
 )
 
+
+
+
 (defn draw [state]
   (q/background  100 120 0)
                                         ;(println (:lines state))
@@ -119,7 +117,6 @@
 
 
   (.sendScreen @server))
-
 
 (defn draw [state]
   (q/background 0 (* 2 (get @sd :velocity)) (* (tr) 2))

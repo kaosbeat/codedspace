@@ -39,13 +39,13 @@
             ;;(print "note ")
             ;;(print (:note e) )
             ;;
-            (print " ")
+            ;;(print " ")
 
 
             (let [note (:note e)
                   vel  (:velocity e)
                   channel (:channel e)]
-    ;          (println channel note vel)
+            (println channel note vel)
               (if (and (= channel 15) (= note 60))
                 (swap! bbeat inc)
                 ;(concat (print "note =") (println  note ))
