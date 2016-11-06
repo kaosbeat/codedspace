@@ -31,6 +31,9 @@
 (remove-event-handler ::clock-handler)
 
 
+;;midimaps
+(def midimap8 (atom []))
+
 (on-event [:midi :note-on]
           (fn [e]
             ;;(println e)
@@ -45,14 +48,14 @@
             (let [note (:note e)
                   vel  (:velocity e)
                   channel (:channel e)]
-            (println channel note vel)
+              ;;(println channel note vel)
               (if (and (= channel 15) (= note 60))
                 (swap! bbeat inc)
-                ;(concat (print "note =") (println  note ))
+                                        ;(concat (print "note =") (println  note ))
                 (if (= channel 0)
-                  ;(println "bd in ta house")
+                                        ;(println "bd in ta house")
                   (swap! bd assoc :note note :velocity vel)
-                  ;(println (concat (print "stuff = ") (print note)))
+                                        ;(println (concat (print "stuff = ") (print note)))
                   (if (= channel 1)
                     (swap! sd assoc :note note :velocity vel)
                     (if (= channel 2)
@@ -68,7 +71,12 @@
                               (if (= channel 7)
                                 (swap! ld2 assoc :note note :velocity vel)
                                 (if (= channel 8)
-                                  (swap! chords assoc :note note :velocity vel)
+                                  (do
+                                    (if-not (contains? @midimap8 note) (do ;(println midimap8)
+                                                                        (swap! midimap8 conj note)
+                                                                        ) )
+
+                                    (swap! chords assoc :note note :velocity vel))
                                   (if (= channel 9)
                                     (swap! keyz assoc :note note :velocity vel) )))))))))))))
           ::keyboard-handler)

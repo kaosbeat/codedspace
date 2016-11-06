@@ -27,7 +27,7 @@
 
 ;  (wavelines 1000 5 2 3 1 200 1200 14 10 1000 100 10 )
 
-  (addpill (* 50 (get (:ld1 state) :note)) (* -20 (get (:ld1 state) :velocity)) 0  20)
+  (addpill (* (* 20 (mod4)) (get (:ld1 state) :note)) (* -20 (get (:ld1 state) :velocity)) 10  20)
   (updatepills) ;;;pillstate is a bit boring at the moment....
   (q/with-translation [500 500 (* -10 (get (:ch state) :pan ))]
     (renderpills state)
@@ -41,7 +41,7 @@
 
   (dotimes [ p 5]
     (q/fill 20 30 24 23)
-    (dolines (+ 25 (* p 300)) 0 200 1000 0 0.2 40 (+ 10 9) (*  p  (mod4)) 0 (* 5 15) 34 40)
+    (dolines (+ 25 (* p 300)) 0 (* (tr) (* p -100)) 200 1000 0 0.2 40 (+ 10 9) (*  p  (mod4)) 0 (* 5 15) 34 40)
     )
 
 
@@ -89,17 +89,23 @@
     )
   )
 
-(defn dolines [x y width height frame size res noisetop noisebottom colorshift r g b ]
+(defn dolines [x y z width height frame size res noisetop noisebottom colorshift r g b ]
   (q/stroke-weight 1)
   (if (= 0 colorshift)
     (q/stroke r g b)
     (q/stroke (* 15 (tr))))
-  (q/with-translation [x y 0]
+  (q/with-translation [x y z]
     (if (= frame 0) (q/rect 0 0 width height))
     (reduce sixtyliner (into [] (map (fn [a]
-                                        ;(println (q/noise (* a noisetop)))
+                                        ;;(println (q/noise (* a noisetop)))
                                           [(* width  (q/noise (* a noisetop))) 0 (* width (q/noise (* a noisebottom))) height])
                                         (range 0 size (/ size res))))))
 
 
 )
+
+
+
+
+;;; TODO add notesmap in midifilters to map range across screen
+;;;
