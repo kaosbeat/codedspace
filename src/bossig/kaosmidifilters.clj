@@ -72,9 +72,11 @@
                                 (swap! ld2 assoc :note note :velocity vel)
                                 (if (= channel 8)
                                   (do
-                                    (if-not (contains? @midimap8 note) (do ;(println midimap8)
-                                                                        (swap! midimap8 conj note)
-                                                                        ) )
+                                    (if (= false (.contains @midimap8 note))
+                                      (do ;(println midimap8)
+                                        (swap! midimap8 conj note)
+                                        (reset! midimap8 (vec (sort @midimap8)))
+                                        ) )
 
                                     (swap! chords assoc :note note :velocity vel))
                                   (if (= channel 9)
