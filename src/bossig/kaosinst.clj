@@ -168,13 +168,6 @@
   (segment 100 10 100 1000 300 90)
 )
 
-(defn wavelines [wavewidth parts offset bottomsegments starttop mintop maxtop startbottom minbottom maxbottom color offset]
-  ;(wavelines 100 5 2 3 1 200 1200 14 10 1000 10 10 )
-  (q/with-translation [(+ 300 offset) 300 0]
-    (dotimes [n parts]
-      (segment (* (+ n 1) (/ wavewidth parts)) n (* 4 (get @bd :note)) (* 30 (get @sd :note)) 300 90 )
-      ))
-  )
 
 
 (defn wavelines [wavewidth parts test bottomsegments starttop mintop maxtop startbottom minbottom maxbottom color offset]
@@ -276,4 +269,74 @@
         (q/box 20 1000 20))
       ))
 
+)
+
+(def trans (atom 0) )
+(defn renderpills [state]
+(let [chord  (get (:chords state ) :note) ]
+   ;; (println chord)
+    (case chord
+      44 (reset! trans 200 )
+      46 (reset! trans 0 )
+      47 (reset! trans  40)
+      49 (reset! trans 700 )
+      52 (reset! trans  340)
+      (reset! trans 0 )
+      )
+    )
+(q/with-translation [0 @trans 0]
+  (dotimes [n (/  (count @pills) 1)]
+    (q/with-translation [(get (nth @pills n) :x ) (get (nth @pills n) :y )  (* 10  (get (nth @pills n) :z ))]
+      (q/fill 45 23 (q/random 230))
+      (if (= 0 (mod n 2))
+        (q/box (* 50 (get (:sd state) :note) ) @trans 40 )
+        (q/with-rotation [(* 40 (mod16))  1 0 0 ]
+          (q/box 5 (* (mod16) 1000) 40 ))
+                                        ;(q/box (* 100 (get (:ld1 state) :note )) 50 50)
+        )
+      )
+    ))
+)
+
+
+
+
+
+(defn doline [p1 p2]
+  (q/line p1 p2))
+(defn sixtyliner [p1p2 & args]
+ ; (println p1p2 )
+ ;; (println (first (into [] args)))
+  (let [ [x1 y1 x2 y2] (first (into [] args))]
+    (q/line x1 y1 x2 y2 )
+    )
+  )
+(defn dolines [x y z width height frame size res noisetop noisebottom colorshift r g b ]
+  (q/stroke-weight 1)
+  (if (= 0 colorshift)
+    (q/stroke r g b)
+    (q/stroke (* 15 (tr))))
+  (q/with-translation [x y z]
+    (if (= frame 0) (q/rect 0 0 width height))
+    (reduce sixtyliner (into [] (map (fn [a]
+                                        ;;(println (q/noise (* a noisetop)))
+                                          [(* width  (q/noise (* a noisetop))) 0 (* width (q/noise (* a noisebottom))) height])
+                                        (range 0 size (/ size res))))))
+
+
+)
+(defn drawinplace [midichannel state]
+  (let [x (((midichannel 2)  (.indexOf (midichannel 1) (get  (get state :chords ) :note))) :x )]
+    (q/with-translation [ x 200 0]
+      (q/box 200)))
+  )
+
+
+(defn drawboxinplace [midimapatom midimapmap state]
+  (let [midimin 67 ;(apply min midimapatom)
+        midimax (apply max midimapatom)]
+
+    (dotimes [n (count midimapatom)]
+      (q/with-translation [(get (nth midimapmap n) :x) (get (nth midimapmap n) :y) (* -1  (get (nth midimapmap n) :z)) ]
+        (q/box 100 ))))
   )

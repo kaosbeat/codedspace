@@ -33,6 +33,8 @@
 
 ;;midimaps
 (def midimap8 (atom []))
+(def midimap8map (atom []))
+(def midichords (atom []))
 
 (on-event [:midi :note-on]
           (fn [e]
@@ -76,6 +78,8 @@
                                       (do ;(println midimap8)
                                         (swap! midimap8 conj note)
                                         (reset! midimap8 (vec (sort @midimap8)))
+                                        (swap! midimap8map conj {:x (rand-int width) :y (rand-int height) :z (rand-int 500) })
+                                        (reset! midichords [{:channel :chords} @midimap8 @midimap8map])
                                         ) )
 
                                     (swap! chords assoc :note note :velocity vel))
@@ -83,6 +87,32 @@
                                     (swap! keyz assoc :note note :velocity vel) )))))))))))))
           ::keyboard-handler)
 
+
+;; (defn midiparse [midimap midimapmap note channelname]
+;;   (do
+;;     (if (= false (.contains midimap note))
+;;       (do ;(println midimap8)
+;;         (swap! midimap8 conj note)
+;;         (reset! midimap8 (vec (sort @midimap8)))
+;;         (swap! midimap8map conj {:x (rand-int width) :y (rand-int height) :z (rand-int 500) })
+;;         (reset! midichords [{:channel :chords} @midimap8 @midimap8map])
+;;         ) )
+
+;;     (swap! chords assoc :note note :velocity vel)))
+
+
+;; (on-event [:midi :note-on]
+;;           (fn [e]
+;;               (let [note (:note e)
+;;                     vel  (:velocity e)
+;;                     channel (:channel e)]
+;;                 (case channel
+;;                   1 (mapmidi )
+;;                   )
+
+;;                 )
+;;               )
+;;           ::keyboard-handler)
 
 (on-event [:midi :control-change]
           (fn [e]
