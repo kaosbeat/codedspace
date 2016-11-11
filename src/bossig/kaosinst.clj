@@ -162,8 +162,8 @@
 
   (q/stroke-weight 2)
   (q/with-translation [(+ (mod4) 500 ) 200 0]
-    (q/stroke 255 23 34)
-    (segment 100 10 (* 4 (get @bd :note)) (* 100 (tr)) (* 1 300) 90))
+    (q/stroke color color 34)
+    (segment 100 (/  (get @chords :note) 5) (* 4 (get @bd :note)) (* 100  (get @chords :note)) (* 1 300) 90))
   (q/stroke 55 13 252)
   (segment 100 10 100 1000 300 90)
 )
