@@ -2,8 +2,8 @@
 
 (defn draw [state]
   (q/background  0 20 0)
-;  (println (:lines state))
-  (println (get (:chords state) :note ))
+  ;(println state)
+ ; (println (get (:chords state) :note ))
   (q/with-translation [50 50 0]
 
                                         ;(drawinplace @midichords state)
@@ -20,12 +20,21 @@
     (renderpills state)
     )
 
-
+  (thosesquares 5 50 (get (state :sd) :note) state )
 
 ;(drawinplace @midichords state)
 
-  (q/with-rotation [(* (tr) 7) 0 1 0 ])
+(q/stroke 34 23 0)
+(q/with-translation [-300 0 -1000])
+(q/with-rotation [(* (mod8) (/ 3.14 4)) 0 0 1 ])
 
-  (dolines 0 -500 0 2000 2000 10 100 100 (get  (state :chords) :note) 10 0 255 0 235  )
+(dolines 0 0 0 2000 2000 1 10 100 (get  (state :sd) :note) (* (:tr state)  1000000000) 0 25 0 255 )
+
+  (q/with-translation [0 -100 0]
+;    (doboxes midibd state 100)
+    )
+  (q/with-translation [0 100 0]
+ ;   (doboxes midild1 state 20)
+    )
 
   (.sendScreen @server))

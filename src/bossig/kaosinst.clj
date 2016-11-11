@@ -340,3 +340,33 @@
       (q/with-translation [(get (nth midimapmap n) :x) (get (nth midimapmap n) :y) (* -1  (get (nth midimapmap n) :z)) ]
         (q/box 100 ))))
   )
+
+
+(defn doboxes [midimapatom state size]
+  (dotimes [n (count (@midimapatom 1))]
+    (if (= ((@midimapatom 1 ) n )  (get (state ((@midimapatom 0) :channel) ) :note))
+      (q/fill 255 255 255 120)
+      (q/fill 255 0 255 120)
+      )
+
+    (q/with-translation [(* n (/ width (count (@midimapatom 1)))) 200 -200 ]
+      (q/box size))
+   ;; (println ((@midimapatom 1) n))
+    )
+  )
+
+
+
+(defn thatsquare [w h]
+  (q/rect 0 0 w h)
+  (h)
+  )
+(def color1 [255 0 0 120])
+(defn thosesquares [w h size state ]
+  (q/fill (color1 0) (color1 1) (color1 2) (color1 3))
+  (q/rect 0 0 w h)
+  (dotimes [n size]
+    (q/rect 0 (* n (* n (/ h size))) w (* n (/ h size)))
+    )
+
+  )

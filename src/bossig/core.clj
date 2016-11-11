@@ -21,9 +21,10 @@
 (event-debug-off)
 
 
-
-
-                                        ;beatclock
+(def width 1440)
+(def height 980)
+;(def width 1920)
+;(def height 1200)                                        ;beatclock
 (def bbeat (atom 1))
 
 
